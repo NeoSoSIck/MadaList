@@ -127,7 +127,7 @@ class LandingScreen(Screen):
         root.add_widget(customer)
 
         # -------------------------
-        # FOOTER
+        # TOC BUTTON
         # -------------------------
 
         terms = Button(
@@ -143,6 +143,10 @@ class LandingScreen(Screen):
 
         terms.bind(on_release=self.terms_clicked)
         root.add_widget(terms)
+        
+        
+        
+        # SEPARATOR " | " #
 
         separator = Label(
             text="|",
@@ -153,39 +157,51 @@ class LandingScreen(Screen):
             pos_hint={"center_x": 0.50, "y": 0.025},
         )
         root.add_widget(separator)
-
+        
+        
+        
+        
+        # HOW IT WORK BUTTON #
+        
         how = Button(
-            text="How It Works",
+            text="How it Work",
             font_size=sp(11.5),
             color=(0.51, 0.50, 0.48, 1),
             background_normal="",
             background_color=(0, 0, 0, 0),
-            size_hint=(0.35, None),
+            size_hint=(0.43, None),
             height=dp(32),
             pos_hint={"x": 0.55, "y": 0.025},
         )
 
         how.bind(on_release=self.how_clicked)
         root.add_widget(how)
-
+        
         self.add_widget(root)
+        
 
     # -------------------------
     # BUTTON FUNCTIONS
     # -------------------------
 
     def seller_clicked(self, instance):
-        self.manager.transition.direction = "left"
+        self.manager.transition.direction = "right"
         self.manager.current = "seller_login"
-
+   
     def customer_clicked(self, instance):
-        print("Customer selected")
+        self.manager.transition.direction = "right"
+        self.manager.current = "customer_login"
+
+    
 
     def terms_clicked(self, instance):
-        print("Terms and Conditions")
-
+        self.manager.transition.direction = "right"
+        self.manager.current = "terms_screen"
+        
     def how_clicked(self, instance):
-        print("How It Works")
+        self.manager.transition.direction = "right"
+        self.manager.current = "how_screen"    
+           
 
 
 # =========================================================
@@ -507,7 +523,7 @@ class SellerLoginScreen(Screen):
         # -------------------------
 
         back_button = Button(
-            text="← Back",
+            text="Back",
             font_size=dp(10),
             color=GRAY,
             background_normal="",
@@ -538,6 +554,214 @@ class SellerLoginScreen(Screen):
     def go_back(self, instance):
         self.manager.transition.direction = "right"
         self.manager.current = "landing"
+        
+                         ####
+        ## CUSTOMER LOGIN ##
+                         ####
+
+class CustomerLoginScreen(Screen):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        root = BoxLayout(
+            orientation="vertical"
+        )
+
+        # -------------------------
+        # CREAM BACKGROUND
+        # -------------------------
+
+        with root.canvas.before:
+
+            Color(*CREAM)
+
+            self.background = Rectangle(
+                pos=root.pos,
+                size=root.size
+            )
+
+        root.bind(
+            pos=self.update_background,
+            size=self.update_background
+        )
+
+        # -------------------------
+        # TOP SPACE
+        # -------------------------
+
+        root.add_widget(Label(
+            text="",
+            size_hint_y=0.20
+        ))
+
+        # -------------------------
+        # TITLE
+        # -------------------------
+
+        root.add_widget(Label(
+            text="Customer Login",
+            font_size=dp(24),
+            bold=True,
+            color=ORANGE,
+            size_hint_y=None,
+            height=dp(42)
+        ))
+
+        # -------------------------
+        # SUBTITLE
+        # -------------------------
+
+        root.add_widget(Label(
+            text="Enter your credentials to continue",
+            font_size=dp(10),
+            color=GRAY,
+            size_hint_y=None,
+            height=dp(25)
+        ))
+
+        # -------------------------
+        # LOGIN BOX
+        # -------------------------
+
+        holder = BoxLayout(
+            orientation="vertical",
+            size_hint=(None, None),
+            size=(dp(300), dp(250)),
+            pos_hint={"center_x": 0.5}
+        )
+
+        holder.add_widget(LoginBox())
+
+        root.add_widget(holder)
+
+        # -------------------------
+        # BACK BUTTON
+        # -------------------------
+
+        back_button = Button(
+            text="Back",
+            font_size=dp(10),
+            color=GRAY,
+            background_normal="",
+            background_color=(0, 0, 0, 0),
+            size_hint_y=None,
+            height=dp(35)
+        )
+
+        back_button.bind(on_release=self.go_back)
+
+        root.add_widget(back_button)
+
+        # -------------------------
+        # BOTTOM SPACE
+        # -------------------------
+
+        root.add_widget(Label(
+            text="",
+            size_hint_y=0.5
+        ))
+
+        self.add_widget(root)
+
+    def update_background(self, *args):
+        self.background.pos = self.children[0].pos
+        self.background.size = self.children[0].size
+
+    def go_back(self, instance):
+        self.manager.transition.direction = "right"
+        self.manager.current = "landing"
+        
+                               
+### TOC PAG PININDOT ###
+
+                       
+class TermsScreen(Screen):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        root = BoxLayout(
+            orientation="vertical"
+        )
+
+        # -------------------------
+        # CREAM BACKGROUND
+        # -------------------------
+
+        with root.canvas.before:
+
+            Color(*CREAM)
+
+            self.background = Rectangle(
+                pos=root.pos,
+                size=root.size
+            )
+
+        root.bind(
+            pos=self.update_background,
+            size=self.update_background
+        )
+        
+        
+        
+
+                
+        self.add_widget(root)
+
+    def update_background(self, *args):
+        self.background.pos = self.children[0].pos
+        self.background.size = self.children[0].size
+
+    def go_back(self, instance):
+        self.manager.transition.direction = "right"
+        self.manager.current = "landing"
+        
+        
+### HOW IT WORK BUTTON ###
+
+                       
+class HowScreen(Screen):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        root = BoxLayout(
+            orientation="vertical"
+        )
+
+        # -------------------------
+        # CREAM BACKGROUND
+        # -------------------------
+
+        with root.canvas.before:
+
+            Color(*CREAM)
+
+            self.background = Rectangle(
+                pos=root.pos,
+                size=root.size
+            )
+
+        root.bind(
+            pos=self.update_background,
+            size=self.update_background
+        )
+        
+        
+        
+
+                
+        self.add_widget(root)
+
+    def update_background(self, *args):
+        self.background.pos = self.children[0].pos
+        self.background.size = self.children[0].size
+
+    def go_back(self, instance):
+        self.manager.transition.direction = "right"
+        self.manager.current = "landing"        
+                               
 
 
 # =========================================================
@@ -551,7 +775,7 @@ class MadaListApp(App):
         self.title = "MadaList"
 
         sm = ScreenManager(
-            transition=SlideTransition(duration=0.25)
+            transition=SlideTransition(duration=0.20)
         )
 
         sm.add_widget(
@@ -560,6 +784,20 @@ class MadaListApp(App):
 
         sm.add_widget(
             SellerLoginScreen(name="seller_login")
+        )
+
+        sm.add_widget(
+            CustomerLoginScreen(name="customer_login")
+        )
+        
+        sm.add_widget(
+        
+TermsScreen(name="terms_screen")
+        )
+        
+        sm.add_widget(
+        
+HowScreen(name="how_screen")
         )
 
         return sm
